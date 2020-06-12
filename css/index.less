@@ -1,0 +1,250 @@
+@fontColor: #fff;
+@url: '../images';
+
+body {
+    margin: 0 auto;
+    font-size: 16px;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+input{
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+
+.fl{
+    float: left;
+}
+
+.fr{
+    float: right;
+}
+
+.clearfix::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.auto-img{
+    width: 100%;
+    display: block;
+}
+
+.morning{
+    background-image: linear-gradient(to bottom, #5476FE, #6FB1FF);
+  }
+  /* 12点-19点 12 <= x < 19 */
+  .day{
+    background-image: linear-gradient(to bottom, #FD7537, #FFAB53);
+  }
+  /*19点- 6点 12 <= x < 第二天6点  */
+  .night{
+    background-image: linear-gradient(to bottom, #4B36FF, #B560FB);
+  }
+  
+
+.d_block{
+    display: block;
+}
+
+.d_none{
+    display: none;
+}
+
+
+.weather_box{
+    color:@fontColor;
+}
+
+.icon_box(@imgName){
+    width: 0.24rem;
+    height: 0.24rem;
+    background: url(@imgName) no-repeat center center;
+    background-size: cover;
+    margin-top: .03rem;
+}
+
+.one-text{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+.weather_box{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    background-image: linear-gradient(to bottom, #5476FE, #6FB1FF);
+    .system{
+        position: sticky;
+        top: 0;
+        height: .24rem;
+    }
+
+    .search{
+        padding: .1rem;
+
+        .location{
+            width: 1rem;
+            height: .3rem;
+            .location_text{
+                font-size: .16rem;
+                line-height: .3rem;
+                width: 0.76rem;
+                text-align: center;
+                .one-text;
+            }
+            .location_icon{
+                .icon_box("@{url}/location.png");
+            }
+        }
+
+        .search_box{
+
+            width:  calc(~"100% - 1.5rem");
+            height: .3rem;
+            margin-left: .2rem;
+            padding: 0 .15rem;
+            border-radius: .15rem;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, .2), rgba(255, 255, 255, .65));
+            .search_inp{
+                width: calc(~"100% - .24rem");
+                height: .3rem;
+                color: @fontColor;
+            }
+            .search_icon{
+                .icon_box("@{url}/search.png");
+            }
+        }
+    }
+
+    .section_banner{
+        width: 100%;
+        height: 2rem;
+        position: relative;
+        .banner_box{
+            width: 1rem;
+            height: 1rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -.5rem;
+            margin-left: -.5rem;
+            .banner_top{
+                font-size: .5rem;
+                text-align: center;
+                position: relative;
+                span.box{
+                    display: block;
+                    width: 0.1rem;
+                    height: 0.1rem;
+                    border: 2px solid #fff;
+                    position: absolute;
+                    right: .05rem;
+                    top: .1rem;
+                    border-radius: 50%;
+                }
+            }
+            .banner_bottom{
+                text-align: center;
+                .text{
+
+                }
+                .sum{
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+
+
+    // 
+    .section_content{
+        width: 100%;
+        .content_list{
+            width: 3rem;
+            margin: 0 auto;
+            display: flex;
+            >li{
+                flex: 1;
+                border-right:1px solid #fff;
+                &:nth-child(3){
+                    border: 0;
+                }
+                padding: .05rem;
+                .sum{
+                    text-align: center;
+                }
+                .text{
+                    text-align: center;
+                }
+            }
+        }
+        p{
+            text-align: center;
+            font-size: .14rem;
+        }
+    }
+
+    .footer{
+        margin-top: .2rem;
+        ul{
+            display: flex;
+            width: 2rem;
+            margin: 0 auto;
+            >li{
+                flex: 1;
+                text-align: center;
+                .active{
+                    border-bottom: 2px solid red;
+                    padding-bottom: 5px;
+
+                }
+            }
+            
+        }
+    }
+
+    .list{
+        width: 100%;
+        padding-left: .1rem;
+        padding-right: .1rem;
+        margin-top: .4rem;
+        // display: flex;
+        li{
+            // flex: 1;
+            width: 20%;
+            margin: 0 auto;
+            text-align: center;
+            font-size: .12rem;
+           > div{
+                &:nth-child(3){
+
+                    .icon_box("@{url}/yun.png");
+
+                    background-size:contain;
+
+                    text-align: center;
+
+                    margin: 0 auto;
+
+                    margin: .1rem auto;
+                }
+           }
+        }
+    }
+}

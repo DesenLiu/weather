@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="./css/index.css" type="text/css">
+    
+    
+</head>
+<body>
+    <div class="weather_box">
+        <div class="system"></div>
+        <!-- 搜索框 -->
+
+        <div class="search clearfix">
+
+            <div class="location fl">
+                <div class="location_text fl">深圳市</div>
+                <div class="location_icon fl"></div>
+            </div>
+
+            <div class="search_box fl">
+
+                <input type="text" class="search_inp fl">
+
+                <span class="search_icon fl"></span>
+
+            </div>
+        </div>
+
+        <!-- 度数 -->
+        <div class="section_banner">
+            <div class="banner_box">
+                <div class="banner_top w" id="tmp">
+                    37 <span class="box"></span>
+                </div>
+                <div class="banner_bottom">
+                    <span class="text w" id="cond_txt">阴</span>
+                    <span class="sum" id="tmp_range">28~36</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 内容 -->
+        <div class="section_content">
+            <ul class="content_list clearfix">
+                <li class="fl">
+                    <div class="sum w" id="wind_sc"></div>
+                    <div class="text w" id="wind_dir"></div>
+                </li>
+
+                <li class="fl">
+                    <div class="sum w" id="vis">16</div>
+                    <div class="text" >可见度</div>
+                </li>
+
+                <li class="fl">
+                    <div class="sum w" id="hum">48</div>
+                    <div class="text">湿度</div>
+                </li>
+            </ul>
+            <p id="perview">
+                未来两小时无降水
+            </p>
+        </div>
+
+        <div class="footer">
+
+            <ul class="clearfix">
+
+                <li class="fl list">
+                    <span class="active">逐天预报</span>
+                </li>
+                <li class="fl list"> 
+                    <span>逐时预报</span>
+                </li>
+            </ul>
+
+            
+        </div>
+
+        <ul class="list clearfix ulList">
+
+            <li class="fl">
+                <div class="data" id="data"></div>
+                <div class="text text1" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw"></div>
+            </li>
+
+            <li class="fl y">
+                <div class="data" id="data"></div>
+                <div class="text text1" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw"></div>
+            </li>
+
+            <li class="fl y">
+                <div class="data" id="data"></div>
+                <div class="text text1" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw"></div>
+            </li>
+
+            <li class="fl y">
+                <div class="data" id="data"></div>
+                <div class="text text1" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw"></div>
+            </li>
+
+            <li class="fl y">
+                <div class="data" id="data"></div>
+                <div class="text text1" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw"></div>
+            </li>
+
+        </ul>
+
+        <ul class="list clearfix ulList d_none">
+
+            <li class="fl">
+                <div class="time" ></div>
+                <div class="text text2" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw1 max"></div>
+            </li>
+
+            <li class="fl">
+                <div class="time"></div>
+                <div class="text text2" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw1 max"></div>
+            </li>
+
+            <li class="fl">
+                <div class="time"></div>
+                <div class="text text2" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw1 max"></div>
+            </li>
+
+            <li class="fl">
+                <div class="time"></div>
+                <div class="text text2" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw1 max"></div>
+            </li>
+
+            <li class="fl">
+                <div class="time"></div>
+                <div class="text text2" id="cond_txt_d"></div>
+                <div class="icon"></div>
+                <div class="fw1 max"></div>
+            </li>
+
+            
+
+        </ul>
+    </div>
+    <script src="./js/jquery.min.js"></script>
+    <!-- <script src="./js/ajaxV0.0.3.js"></script> -->
+    <script src="./js/rem.js"></script> 
+    <script>
+
+        let list = $(".list");
+        console.log(list);
+
+        for(let i = 0  ; i< list.length ; i++){
+            list[i].onclick = function(){
+                $(this).children().addClass("active").parent().siblings().children().removeClass("active");
+                var index = $(this).index();
+                // console.log($(".ulList"));
+                console.log($(".ulList").eq(index).addClass("d_block").siblings())
+                $(".ulList").eq(index).css("display","block").siblings(".ulList").css("display","none");
+
+            }
+        }
+
+
+
+
+        function locationIP(){
+            console.log("111")
+            $.ajax({
+              type:"get",
+              url:"https://apis.map.qq.com/ws/location/v1/ip",
+              data:{
+                key:"KMQBZ-IQS63-HKT3M-YCD5F-L7LG7-3BB7Z",
+                output:"jsonp"
+              },
+              dataType:"jsonp",
+              success:function(res){
+                console.log(res);
+                $(".location_text").text(res.result.ad_info.city)
+                tq(res.result.ad_info.city)
+              },
+              err:function(err){
+                console.log(err);
+              }
+            })
+        }
+
+        locationIP()
+
+        function tq(city){
+            $.ajax({
+                type:"get",
+                url:"https://api.heweather.net/s6/weather",
+                data:{
+                    location:city,
+                    key:"ba315349348a4a8398b157f6e7b68505"
+                },
+                success:function(result){
+                    console.log(result);
+                    let weather = result.HeWeather6[0];
+                    if(weather.status == 'unknown location'){
+                        console.log("不存在城市天气")
+                        $(".search_inp").val("");
+                        return; 
+                    }
+                    console.log(weather)
+                    getMinute(weather.basic.lon , weather.basic.lat)
+                    
+                    $(".location_text ").text(city);
+                    $(".search_inp").val("");
+                    
+                    
+                    $(".w").each(
+                        function(){
+                            let id = $(this).attr('id');
+                            $(this).text(weather.now[id])
+                        }
+                    )
+
+                    let minTmp = weather.daily_forecast[0].tmp_min;
+                    let maxTmp = weather.daily_forecast[0].tmp_max;
+                    let str = minTmp + "-" + maxTmp + "℃"; 
+                    console.log(str)
+                    $("#tmp_range").text(str);
+
+                    $(".data").each(
+                        function(index){
+                            // console.log(index)
+                            let date = weather.daily_forecast[index].date;
+                            date = date.slice(5,10);
+                            // console.log(date)
+                            $(this).text(date);
+                        }
+                    )
+
+                    $(".text1").each(
+                        function(index){
+                            // console.log(index)
+                            let cond = weather.daily_forecast[index].cond_txt_d;
+                            // console.log(cond)
+                            $(this).text(cond);
+                        }
+                    )
+
+                    $(".fw").each(
+                        function(index){
+                            let minTmp = weather.daily_forecast[index].tmp_min;
+                            let maxTmp = weather.daily_forecast[index].tmp_max;
+                            console.log(minTmp , maxTmp)
+                            let res = pj(minTmp , maxTmp);
+                            $(this).text(res)
+                        }
+                    )
+
+                    $(".time").each(
+                        function(index){
+                            let text = weather.hourly[index].time;
+                            text = text.slice(11,16);
+                            $(this).text(text)
+                        }
+                    )
+
+                    $(".text2").each(
+                        function(index){
+                            let text = weather.hourly[index].cond_txt;
+                            $(this).text(text)
+                        }
+                    )
+
+
+                    $(".max").each(
+                        function(index){
+                            let text = weather.hourly[index].tmp;
+                            $(this).text(text)
+                        }
+                    )
+
+
+                },
+                err:function(){
+                    console.log(err);
+                }
+            })
+        }
+
+
+        function getMinute(lon , lat){
+            console.log(lon , lat);
+            $.ajax({
+                type:"get",
+                url:"https://api.heweather.net/s6/weather",
+                data:{
+                    location:lon + ',' + lat,
+                    key:"ba315349348a4a8398b157f6e7b68505"
+                },
+                success:res => {
+                    console.log("分级降水",res);
+                    // $("#perview").text(res.HeWeather6[0].daily_forecast.text)
+                },
+                err: err=>{
+                    console.log(err)
+                }
+            })
+        }
+
+        function pj(num1 , num2){
+            let str = num1 +"~" + num2+"℃";
+            return str
+        }
+    
+        $(".search_icon").on("click",function(){
+            let v1 = $(".search_inp").val();
+            console.log(v1);
+
+            tq(v1);
+        })
+    
+    
+        // 不同时间段设置不同的背景
+        function setBackground(){
+            let time = new Date().getHours();
+
+            let $weatherBox = $(".weather_box");
+
+            let t = '';
+
+            if(time >= 6 && time < 12){
+                t = 'morning';
+            }else if(time >= 12 && time < 19){
+                t = 'day';
+            }else{
+                t = 'night';
+            }
+
+            $weatherBox.addClass(t);
+        }
+
+
+        setBackground();
+    </script>
+    
+</body>
+</html>
